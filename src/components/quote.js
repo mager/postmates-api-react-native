@@ -6,16 +6,12 @@ var {
   TextInput
 } = React;
 
+import keys from '../config/keys';
 import Button from './common/button';
 import axios from 'axios';
+import querystring from 'querystring';
 
 const URL = 'https://api.postmates.com/v1/customers';
-const CUSTOMER_ID = 'cus_KS6jC-OiyUEtEV';
-const API_KEY = 'Basic Nzc2ZmE0OTMtYmY1ZC00YjNiLWIyYzktOWVhN2Q1ZWRiZGZhOg==';
-const CONFIG = {
-    headers: {'Authorization': API_KEY},
-}
-
 
 
 module.exports = React.createClass({
@@ -52,13 +48,22 @@ module.exports = React.createClass({
     );
   },
   onPress: function() {
-    const REQUEST_URL = `${URL}/${CUSTOMER_ID}/delivery_quotes`
-    console.log(REQUEST_URL);
+    const REQUEST_URL = `${URL}/${keys.customer_key}/delivery_quotes`;
 
-    axios.post(REQUEST_URL, {
-        pickup_address: '100 Market St, San Francisco, CA',
-        dropoff_address: '425 Market St, San Francisco, CA'
-      }, CONFIG)
+    var data = querystring.stringify({
+      pickup_address: '100 Market St, San Francisco, CA',
+      dropoff_address: '425 Market St, San Francisco, CA'
+    });
+
+    axios({
+        method: 'post',
+        url: REQUEST_URL,
+        data: data,
+        headers: {
+          'Authorization': keys.api_key,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
       .then(function (response) {
         console.log(response);
       })
