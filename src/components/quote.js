@@ -17,35 +17,42 @@ const URL = 'https://api.postmates.com/v1/customers';
 module.exports = React.createClass({
     getInitialState: function() {
         return {
-            pickup_address: '100 Market St, San Francisco, CA',
-            dropoff_address: '425 Market St, San Francisco, CA',
+            pickup_address: '1 ferry building, sf, ca',
+            dropoff_address: '425 market, sf, ca',
             quote_price: ''
         };
     },
     render: function() {
         return (
             <View style={styles.container}>
-            <Text>Get a delivery quote</Text>
+                <View style={styles.main}>
+                    <Text style={styles.title}>Get a delivery quote</Text>
 
-            <Text style={styles.label}>Pickup address:</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.pickup_address}
-                onChangeText={(text) => this.setState({
-                pickup_address: text
-            })} />
+                    <Text style={styles.label}>Pickup address:</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={this.state.pickup_address}
+                        onChangeText={(text) => this.setState({
+                        pickup_address: text
+                    })} />
 
-            <Text style={styles.label}>Dropoff address:</Text>
-            <TextInput
-                style={styles.input}
-                value={this.state.dropoff_address}
-                onChangeText={(text) => this.setState({
-                dropoff_address: text
-            })} />
+                    <Text style={styles.label}>Dropoff address:</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={this.state.dropoff_address}
+                        onChangeText={(text) => this.setState({
+                        dropoff_address: text
+                    })} />
 
-            <Text style={styles.label}>{this.state.errorMessage}</Text>
-            <Text style={styles.label}>{this.state.quote_price}</Text>
-            <Button text={'Get Quote'} onPress={this.onPress} />
+                    <Text style={styles.label}>{this.state.errorMessage}</Text>
+                    <Text style={styles.quote_price}>{this.state.quote_price}</Text>
+                    <Button text={'Get Quote'} onPress={this.onPress} />
+                </View>
+                <View style={styles.map}>
+                    <Text>
+                        This is a map.
+                    </Text>
+                </View>
             </View>
         );
     },
@@ -67,12 +74,15 @@ module.exports = React.createClass({
         })
         .then((response) => {
             this.setState({
-                quote_price: response.data.fee
+                quote_price: this.formatQuote(response.data.fee)
             });
         })
         .catch((response) => {
             console.log(response);
         });
+    },
+    formatQuote: function(quote) {
+        return `$${(quote/100).toFixed(2)}`;
     }
 });
 
@@ -82,17 +92,41 @@ var styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    main: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: 'blue',
+        borderWidth: 1
+    },
+    map: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: 'red',
+        borderWidth: 1
+    },
     input: {
-        padding: 4,
-        height: 40,
+        padding: 3,
+        height: 32,
         borderColor: '#ddd',
         borderWidth: 1,
         borderRadius: 3,
-        margin: 5,
-        width: 200,
-        alignSelf: 'center'
+        margin: 10,
+        width: 300,
+        alignSelf: 'flex-start'
+    },
+    title: {
+        fontSize: 18,
+        marginBottom: 20
     },
     label: {
-        fontSize: 18
+        fontSize: 12,
+        width: 300,
+        alignSelf: 'flex-start'
+    },
+    quote_price: {
+        fontSize: 24,
+        color: 'lime'
     }
 });

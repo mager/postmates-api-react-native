@@ -1,7 +1,7 @@
 var React = require('react-native');
 var {
-  Navigator,
-  StyleSheet
+    Navigator,
+    StyleSheet
 } = React;
 
 var Quote = require('./components/quote');
@@ -19,12 +19,12 @@ module.exports = React.createClass({
     render: function() {
         return (
             <Navigator
-            style={styles.container}
-            initialRoute={{name: 'quote'}}
-            renderScene={this.renderScene}
-            configureScene={() => {
-                return Navigator.SceneConfigs.FloatFromRight;
-            }} />
+                style={styles.container}
+                initialRoute={{name: 'quote'}}
+                renderScene={this.renderScene}
+                configureScene={() => {
+                    return Navigator.SceneConfigs.FloatFromRight;
+                }} />
         );
     }
 });
