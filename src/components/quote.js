@@ -1,13 +1,9 @@
 var React = require('react-native');
-var {
-  View,
-  Text,
-  StyleSheet,
-  TextInput
-} = React;
+var { View, Text, StyleSheet, TextInput} = React;
+import MapView from 'react-native-maps';
+import Button from './common/button';
 
 import keys from '../config/keys';
-import Button from './common/button';
 import axios from 'axios';
 import querystring from 'querystring';
 
@@ -28,31 +24,36 @@ module.exports = React.createClass({
                 <View style={styles.main}>
                     <Text style={styles.title}>Get a delivery quote</Text>
 
-                    <Text style={styles.label}>Pickup address:</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={this.state.pickup_address}
-                        onChangeText={(text) => this.setState({
-                        pickup_address: text
-                    })} />
+                    <View style={styles.form}>
+                        <Text style={styles.label}>Pickup address:</Text>
+                        <TextInput
+                            style={styles.input}
+                            value={this.state.pickup_address}
+                            onChangeText={(text) => this.setState({
+                            pickup_address: text
+                        })} />
 
-                    <Text style={styles.label}>Dropoff address:</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={this.state.dropoff_address}
-                        onChangeText={(text) => this.setState({
-                        dropoff_address: text
-                    })} />
+                        <Text style={styles.label}>Dropoff address:</Text>
+                        <TextInput
+                            style={styles.input}
+                            value={this.state.dropoff_address}
+                            onChangeText={(text) => this.setState({
+                            dropoff_address: text
+                        })} />
+                    </View>
 
                     <Text style={styles.label}>{this.state.errorMessage}</Text>
                     <Text style={styles.quote_price}>{this.state.quote_price}</Text>
                     <Button text={'Get Quote'} onPress={this.onPress} />
                 </View>
-                <View style={styles.map}>
-                    <Text>
-                        This is a map.
-                    </Text>
-                </View>
+                <MapView
+                    style={styles.map}
+                    initialRegion={{
+                        latitude: 37.78825,
+                        longitude: -122.4324,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}/>
             </View>
         );
     },
@@ -90,15 +91,15 @@ var styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'stretch'
     },
     main: {
         flex: 1,
+        padding: 10,
         justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: 'blue',
-        borderWidth: 1
+        alignItems: 'center'
     },
+    form: {},
     map: {
         flex: 1,
         justifyContent: 'center',
@@ -112,7 +113,8 @@ var styles = StyleSheet.create({
         borderColor: '#ddd',
         borderWidth: 1,
         borderRadius: 3,
-        margin: 10,
+        marginTop: 5,
+        marginBottom: 15,
         width: 300,
         alignSelf: 'flex-start'
     },

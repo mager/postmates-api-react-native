@@ -9,6 +9,7 @@
     "axios": "^0.10.0",
     "querystring": "^0.2.0",
     "react": "^0.14.8",
-    "react-native": "^0.24.1"
+    "react-native": "^0.24.1",
+    "react-native-maps": "^0.3.2"
   }
 }
