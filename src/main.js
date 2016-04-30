@@ -4,9 +4,11 @@ var {
     StyleSheet
 } = React;
 
+var Landing = require('./components/landing');
 var Quote = require('./components/quote');
 
 var ROUTES = {
+    landing: Landing,
     quote: Quote
 }
 
@@ -20,7 +22,7 @@ module.exports = React.createClass({
         return (
             <Navigator
                 style={styles.container}
-                initialRoute={{name: 'quote'}}
+                initialRoute={{name: 'landing'}}
                 renderScene={this.renderScene}
                 configureScene={() => {
                     return Navigator.SceneConfigs.FloatFromRight;
