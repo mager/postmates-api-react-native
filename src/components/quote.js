@@ -15,8 +15,25 @@ module.exports = React.createClass({
         return {
             pickup_address: '1 ferry building, sf, ca',
             dropoff_address: '425 market, sf, ca',
-            quote_price: ''
+            quote_price: '',
+            renderMap: false
         };
+    },
+
+    componentDidMount: function(){
+        this.setState({renderMap: true})
+    },
+    renderMap: function(){
+        return (
+            <MapView
+                style={styles.map}
+                initialRegion={{
+                    latitude: 37.78825,
+                    longitude: -122.4324,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                }}/>
+        )
     },
     render: function() {
         return (
@@ -46,14 +63,7 @@ module.exports = React.createClass({
                     <Text style={styles.quote_price}>{this.state.quote_price}</Text>
                     <Button text={'Get Quote'} onPress={this.onPress} />
                 </View>
-                <MapView
-                    style={styles.map}
-                    initialRegion={{
-                        latitude: 37.78825,
-                        longitude: -122.4324,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,
-                    }}/>
+                {this.state.renderMap ? this.renderMap() : null}
             </View>
         );
     },

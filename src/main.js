@@ -25,7 +25,7 @@ module.exports = React.createClass({
                 initialRoute={{name: 'landing'}}
                 renderScene={this.renderScene}
                 configureScene={() => {
-                    return Navigator.SceneConfigs.FloatFromRight;
+                    return Navigator.SceneConfigs.PushFromRight;
                 }} />
         );
     }
@@ -33,6 +33,7 @@ module.exports = React.createClass({
 
 var styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: '#fff'
     }
 });
